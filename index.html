@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>FileShelf — Downloads</title>
+  <style>
+    :root { color-scheme: light; --ink:#172033; --muted:#667085; --line:#e4e8f0; --paper:#fff; --bg:#f5f7fb; --accent:#315efb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
+    .wrap { width:min(1120px, calc(100% - 32px)); margin:0 auto; }
+    header { padding:52px 0 30px; }
+    .eyebrow { font-size:.78rem; letter-spacing:.13em; text-transform:uppercase; font-weight:750; color:var(--accent); }
+    h1 { font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-.045em; margin:10px 0 12px; line-height:1.05; }
+    .intro { color:var(--muted); max-width:660px; line-height:1.7; margin:0; }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin:24px 0 18px; }
+    input[type="search"] { width:min(440px,100%); border:1px solid var(--line); border-radius:12px; padding:13px 15px; background:white; font:inherit; outline:none; }
+    input[type="search"]:focus { border-color:var(--accent); box-shadow:0 0 0 3px #315efb1c; }
+    .tagbar { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
+    .tag { border:1px solid var(--line); border-radius:999px; padding:7px 11px; color:#475467; background:white; font-size:.83rem; cursor:pointer; }
+    .tag.active { color:white; border-color:var(--accent); background:var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:54px; }
+    .card { overflow:hidden; border:1px solid var(--line); border-radius:18px; background:var(--paper); display:flex; flex-direction:column; min-width:0; box-shadow:0 5px 18px #1b2a4a08; }
+    .cover { height:176px; background:#eef2ff; display:grid; place-items:center; overflow:hidden; }
+    .cover img { width:100%; height:100%; object-fit:cover; }
+    .cover img.fallback { width:76px; height:76px; object-fit:contain; }
+    .body { padding:18px; display:flex; flex-direction:column; flex:1; }
+    .card h2 { font-size:1.12rem; line-height:1.4; margin:0 0 8px; letter-spacing:-.015em; }
+    .desc { color:var(--muted); font-size:.93rem; line-height:1.6; margin:0 0 15px; white-space:pre-wrap; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-bottom:18px; }
+    .mini-tag { font-size:.75rem; background:#f0f3f9; color:#536078; border-radius:7px; padding:5px 8px; }
+    .download { display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; background:var(--accent); color:white; border-radius:10px; padding:12px 14px; font-weight:700; font-size:.92rem; }
+    .download:hover { background:#244bd7; }
+    .empty { grid-column:1/-1; padding:48px 16px; text-align:center; color:var(--muted); border:1px dashed #cbd2df; border-radius:16px; background:#ffffff80; }
+    footer { border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; padding:22px 0 32px; }
+    @media (max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:560px) { header { padding-top:34px; } .grid { grid-template-columns:1fr; } .cover { height:190px; } }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="eyebrow">SFS Rocket projects By Aftab J</div>
+    <h1 id="site-title">SFS BluePrints</h1>
+    <p class="intro" id="site-description">Useful files, resources, and downloads in one place.</p>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search titles, descriptions, or tags…" aria-label="Search files">
+    </div>
+    <div id="tagbar" class="tagbar" aria-label="Filter by tag"></div>
+  </header>
+  <main class="wrap">
+    <section id="grid" class="grid" aria-live="polite"></section>
+  </main>
+  <footer><div class="wrap">Files are hosted externally. Only share files you have permission to distribute.</div></footer>
+
+<script>
+  const DEFAULT_IMAGE = "assets/default-file.svg";
+  let allItems = [];
+  let activeTag = "all";
+
+  function safeText(value) {
+    return String(value ?? "");
+  }
+
+  function driveDownloadUrl(url) {
+    try {
+      const parsed = new URL(url);
+      if (!/(^|\.)drive\.google\.com$/i.test(parsed.hostname)) return url;
+      // Accept /file/d/FILE_ID/... and ?id=FILE_ID URL forms.
+      const pathMatch = parsed.pathname.match(/\/file\/d\/([^/]+)/);
+      const id = pathMatch?.[1] || parsed.searchParams.get("id");
+      if (!id || id === "REPLACE_WITH_FILE_ID") return url;
+      return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
+    } catch {
+      return url;
+    }
+  }
+
+  function make(tag, className, text) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+
+  function renderTags(items) {
+    const bar = document.getElementById("tagbar");
+    bar.replaceChildren();
+    const tags = [...new Set(items.flatMap(item => Array.isArray(item.tags) ? item.tags : []))]
+      .filter(Boolean).sort((a,b) => String(a).localeCompare(String(b)));
+    const all = ["all", ...tags];
+    for (const tag of all) {
+      const button = make("button", "tag" + (activeTag === tag ? " active" : ""), tag === "all" ? "All files" : `#${tag}`);
+      button.type = "button";
+      button.addEventListener("click", () => { activeTag = tag; renderTags(allItems); renderItems(); });
+      bar.append(button);
+    }
+  }
+
+  function renderItems() {
+    const grid = document.getElementById("grid");
+    const query = document.getElementById("search").value.trim().toLowerCase();
+    const filtered = allItems.filter(item => {
+      const tags = Array.isArray(item.tags) ? item.tags : [];
+      const text = [item.title, item.description, ...tags].join(" ").toLowerCase();
+      return (activeTag === "all" || tags.includes(activeTag)) && text.includes(query);
+    });
+    grid.replaceChildren();
+    if (!filtered.length) {
+      grid.append(make("div", "empty", "No files match your search."));
+      return;
+    }
+
+    for (const item of filtered) {
+      const card = make("article", "card");
+      const cover = make("div", "cover");
+      const img = document.createElement("img");
+      img.alt = safeText(item.title) + " preview";
+      img.loading = "lazy";
+      img.src = safeText(item.image).trim() || DEFAULT_IMAGE;
+      img.onerror = () => { img.onerror = null; img.src = DEFAULT_IMAGE; img.classList.add("fallback"); };
+      cover.append(img);
+
+      const body = make("div", "body");
+      body.append(make("h2", "", item.title || "Untitled file"));
+      body.append(make("p", "desc", item.description || ""));
+      const tagsEl = make("div", "tags");
+      for (const tag of (Array.isArray(item.tags) ? item.tags : [])) {
+        tagsEl.append(make("span", "mini-tag", "#" + tag));
+      }
+      body.append(tagsEl);
+
+      const link = document.createElement("a");
+      link.className = "download";
+      link.href = driveDownloadUrl(safeText(item.driveUrl).trim());
+      link.textContent = "↓  Download file";
+      link.setAttribute("aria-label", `Download ${item.title || "file"}`);
+      link.rel = "noopener noreferrer";
+      // The browser may preview or ask for confirmation depending on Drive settings and file type.
+      body.append(link);
+      card.append(cover, body);
+      grid.append(card);
+    }
+  }
+
+  async function init() {
+    try {
+      const response = await fetch("data.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Could not load data.json");
+      const data = await response.json();
+      const site = data.site || {};
+      document.title = `${site.title || "FileShelf"} — Downloads`;
+      document.getElementById("site-title").textContent = site.title || "FileShelf";
+      document.getElementById("site-description").textContent = site.description || "";
+      allItems = Array.isArray(data.items) ? data.items : [];
+      renderTags(allItems);
+      renderItems();
+    } catch (error) {
+      document.getElementById("grid").append(
+        make("div", "empty", "Could not load data.json. Run this site through a local web server or host it on a static hosting service.")
+      );
+      console.error(error);
+    }
+  }
+
+  document.getElementById("search").addEventListener("input", renderItems);
+  init();
+</script>
+</body>
+</html>

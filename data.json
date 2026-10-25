@@ -1,0 +1,38 @@
+{
+  "site": {
+    "title": "FileShelf",
+    "description": "Useful files, resources, and downloads in one place.",
+    "tags": [
+      "resources",
+      "downloads",
+      "files"
+    ]
+  },
+  "items": [
+    {
+      "id": "sample-resource",
+      "title": "Sample Resource File",
+      "description": "Replace this sample with your own file title and description.",
+      "tags": [
+        "sample",
+        "resource",
+        "pdf"
+      ],
+      "image": "assets/default-file.svg",
+      "driveUrl": "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/view?usp=sharing",
+      "fileName": "sample-resource.pdf"
+    },
+    {
+      "id": "sample-guide",
+      "title": "Sample Guide",
+      "description": "A second example showing how multiple files appear on the page.",
+      "tags": [
+        "guide",
+        "learning"
+      ],
+      "image": "",
+      "driveUrl": "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/view?usp=sharing",
+      "fileName": "sample-guide.pdf"
+    }
+  ]
+}
