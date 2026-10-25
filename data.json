@@ -19,7 +19,7 @@
         "missile",
         "blueprint"
       ],
-      "image": "assets/1_sfs",
+      "image": "assets/1_sfs.png",
       "driveUrl": "https://drive.google.com/file/d/15FvUlJ3eP04n0dXvA35Ju98gzC-g6JuK/view?usp=drivesdk",
       "fileName": "SFS-Drone-With-Powerful-Missile.txt"
     }
