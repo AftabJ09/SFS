@@ -1,38 +1,27 @@
 {
   "site": {
-    "title": "FileShelf",
-    "description": "Useful files, resources, and downloads in one place.",
+    "title": "sfs blueprints",
+    "description": "Spaceflight Simulator blueprints, custom builds, and downloadable designs.",
     "tags": [
-      "resources",
-      "downloads",
-      "files"
+      "SFS",
+      "Spaceflight Simulator",
+      "blueprints"
     ]
   },
   "items": [
     {
-      "id": "sample-resource",
-      "title": "Sample Resource File",
-      "description": "Replace this sample with your own file title and description.",
+      "id": "1",
+      "title": "Drone with Powerful Missile",
+      "description": "A custom drone build in Spaceflight Simulator equipped with a powerful in-game missile. Download the blueprint and try it in your own game.",
       "tags": [
-        "sample",
-        "resource",
-        "pdf"
+        "SFS",
+        "drone",
+        "missile",
+        "blueprint"
       ],
-      "image": "assets/default-file.svg",
-      "driveUrl": "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/view?usp=sharing",
-      "fileName": "sample-resource.pdf"
-    },
-    {
-      "id": "sample-guide",
-      "title": "Sample Guide",
-      "description": "A second example showing how multiple files appear on the page.",
-      "tags": [
-        "guide",
-        "learning"
-      ],
-      "image": "",
-      "driveUrl": "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/view?usp=sharing",
-      "fileName": "sample-guide.pdf"
+      "image": "assets/1_sfs",
+      "driveUrl": "https://drive.google.com/file/d/15FvUlJ3eP04n0dXvA35Ju98gzC-g6JuK/view?usp=drivesdk",
+      "fileName": "SFS-Drone-With-Powerful-Missile.txt"
     }
   ]
 }
