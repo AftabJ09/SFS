@@ -88,6 +88,7 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:18px;
+      padding-top:22px;
       padding-bottom:26px;
     }
     .panel {
@@ -107,7 +108,7 @@
       color:#667085;
       line-height:1.7;
     }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:54px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:24px; }
     .card {
       overflow:hidden;
       border:1px solid #e4e8f0;
@@ -210,6 +211,8 @@
   </header>
 
   <main class="wrap">
+    <section id="grid" class="grid" aria-live="polite"></section>
+
     <section class="info-grid">
       <div class="panel">
         <h2>About this library</h2>
@@ -226,8 +229,6 @@
         </p>
       </div>
     </section>
-
-    <section id="grid" class="grid" aria-live="polite"></section>
   </main>
 
   <footer><div class="wrap">Files are hosted externally. Only share files you have permission to distribute.</div></footer>
