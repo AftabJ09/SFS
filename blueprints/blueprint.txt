@@ -1,0 +1,3 @@
+Blueprint for the SFS project.
+
+This folder is intended to hold project blueprint notes and related text assets.
