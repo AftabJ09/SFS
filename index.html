@@ -14,11 +14,7 @@
       --paper:#fff;
       --bg:#f5f7fb;
       --accent:#315efb;
-      --accent-soft:#dfe7ff;
       --success:#16a34a;
-      --success-soft:#dcfce7;
-      --warning:#cbd5e1;
-      --danger:#dc2626;
       --shadow:0 5px 18px rgba(27,42,74,.08);
     }
     * { box-sizing:border-box; }
@@ -28,15 +24,48 @@
       background:var(--bg);
       color:var(--ink);
     }
+    a { color:inherit; }
     .wrap { width:min(1120px, calc(100% - 32px)); margin:0 auto; }
-    header { padding:52px 0 30px; }
+    header { padding:52px 0 24px; }
     .eyebrow { font-size:.78rem; letter-spacing:.13em; text-transform:uppercase; font-weight:750; color:var(--accent); }
     h1 { font-size:clamp(2rem,5vw,3.5rem); letter-spacing:-.045em; margin:10px 0 12px; line-height:1.05; }
     .intro { color:var(--muted); max-width:660px; line-height:1.7; margin:0; }
+    .promo-strip {
+      margin:26px 0 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      padding:16px 18px;
+      border:1px solid rgba(49,94,251,.15);
+      background:linear-gradient(135deg, rgba(49,94,251,.08), rgba(22,163,74,.06));
+      border-radius:16px;
+      box-shadow:0 12px 28px rgba(49,94,251,.08);
+    }
+    .promo-text {
+      font-size:0.98rem;
+      color:#24314b;
+      line-height:1.6;
+      margin:0;
+    }
+    .yt-link {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      background:#ff0000;
+      color:#fff;
+      border-radius:999px;
+      padding:10px 16px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .yt-link:hover { background:#d60000; }
     .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin:24px 0 18px; }
     input[type="search"] {
       width:min(440px,100%);
-      border:1px solid var(--line);
+      border:1px solid #e4e8f0;
       border-radius:12px;
       padding:13px 15px;
       background:white;
@@ -46,7 +75,7 @@
     input[type="search"]:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(49,94,251,.11); }
     .tagbar { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
     .tag {
-      border:1px solid var(--line);
+      border:1px solid #e4e8f0;
       border-radius:999px;
       padding:7px 11px;
       color:#475467;
@@ -55,12 +84,35 @@
       cursor:pointer;
     }
     .tag.active { color:white; border-color:var(--accent); background:var(--accent); }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+      padding-bottom:26px;
+    }
+    .panel {
+      background:white;
+      border:1px solid #e4e8f0;
+      border-radius:18px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .panel h2 {
+      margin:0 0 10px;
+      font-size:1.2rem;
+      letter-spacing:-.02em;
+    }
+    .panel p {
+      margin:0;
+      color:#667085;
+      line-height:1.7;
+    }
     .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:54px; }
     .card {
       overflow:hidden;
-      border:1px solid var(--line);
+      border:1px solid #e4e8f0;
       border-radius:18px;
-      background:var(--paper);
+      background:#fff;
       display:flex;
       flex-direction:column;
       min-width:0;
@@ -71,7 +123,7 @@
     .cover img.fallback { width:76px; height:76px; object-fit:contain; }
     .body { padding:18px; display:flex; flex-direction:column; flex:1; }
     .card h2 { font-size:1.12rem; line-height:1.4; margin:0 0 8px; letter-spacing:-.015em; }
-    .desc { color:var(--muted); font-size:.93rem; line-height:1.6; margin:0 0 15px; white-space:pre-wrap; }
+    .desc { color:#667085; font-size:.93rem; line-height:1.6; margin:0 0 15px; white-space:pre-wrap; }
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-bottom:18px; }
     .mini-tag { font-size:.75rem; background:#f0f3f9; color:#536078; border-radius:7px; padding:5px 8px; }
     .download {
@@ -126,10 +178,18 @@
     }
     .toast.show { opacity:1; transform:translateY(0); }
     .toast.error { background:#dc2626; box-shadow:0 18px 42px rgba(220,38,38,.25); }
-    .empty { grid-column:1/-1; padding:48px 16px; text-align:center; color:var(--muted); border:1px dashed #cbd2df; border-radius:16px; background:#ffffff80; }
-    footer { border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; padding:22px 0 32px; }
-    @media (max-width:850px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media (max-width:560px) { header { padding-top:34px; } .grid { grid-template-columns:1fr; } .cover { height:190px; } }
+    .empty { grid-column:1/-1; padding:48px 16px; text-align:center; color:#667085; border:1px dashed #cbd2df; border-radius:16px; background:#ffffff80; }
+    footer { border-top:1px solid #e4e8f0; color:#667085; font-size:.85rem; padding:22px 0 32px; }
+    @media (max-width:850px) {
+      .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .info-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:560px) {
+      header { padding-top:34px; }
+      .grid { grid-template-columns:1fr; }
+      .cover { height:190px; }
+      .promo-strip { align-items:flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -137,14 +197,39 @@
     <div class="eyebrow">SFS Rocket projects By Aftab J</div>
     <h1 id="site-title">SFS BluePrints</h1>
     <p class="intro" id="site-description">Useful files, resources, and downloads in one place.</p>
+
+    <div class="promo-strip">
+      <p class="promo-text">🚀 New builds, tutorials, and SFS showcases are posted on my YouTube channel. Follow for fresh blueprints and updates.</p>
+      <a class="yt-link" href="https://youtube.com/@aftabgamersfs?si=ZRUq-hl0nDWsCouW" target="_blank" rel="noopener noreferrer">▶ YouTube @aftabgamersfs</a>
+    </div>
+
     <div class="toolbar">
       <input id="search" type="search" placeholder="Search titles, descriptions, or tags…" aria-label="Search files">
     </div>
     <div id="tagbar" class="tagbar" aria-label="Filter by tag"></div>
   </header>
+
   <main class="wrap">
+    <section class="info-grid">
+      <div class="panel">
+        <h2>About this library</h2>
+        <p>
+          SFS BluePrints is a simple, clean catalog for sharing Spaceflight Simulator designs, drone builds, and downloadable blueprints.
+          Every file is stored in the repo and can be downloaded directly without opening the raw blueprint in the browser.
+        </p>
+      </div>
+      <div class="panel">
+        <h2>Support the channel</h2>
+        <p>
+          Subscribe on YouTube for gameplay videos, blueprint breakdowns, custom ship ideas, and more Spaceflight Simulator content.
+          Your support helps keep new builds and tutorials coming.
+        </p>
+      </div>
+    </section>
+
     <section id="grid" class="grid" aria-live="polite"></section>
   </main>
+
   <footer><div class="wrap">Files are hosted externally. Only share files you have permission to distribute.</div></footer>
   <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
 
@@ -202,6 +287,7 @@
       if (!response.ok) {
         throw new Error(`Download failed: ${response.status} ${response.statusText}`);
       }
+
       const blob = await response.blob();
       const objectUrl = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
@@ -224,6 +310,7 @@
       document.querySelectorAll(".download").forEach((button) => {
         const defaultText = button.dataset.defaultText || "↓ Download file";
         button.dataset.defaultText = defaultText;
+
         button.addEventListener("click", async (event) => {
           event.preventDefault();
           if (button.disabled) return;
