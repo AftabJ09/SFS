@@ -30,7 +30,7 @@
     .desc { color:var(--muted); font-size:.93rem; line-height:1.6; margin:0 0 15px; white-space:pre-wrap; }
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-bottom:18px; }
     .mini-tag { font-size:.75rem; background:#f0f3f9; color:#536078; border-radius:7px; padding:5px 8px; }
-    .download { display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; background:var(--accent); color:white; border-radius:10px; padding:12px 14px; font-weight:700; font-size:.92rem; }
+    .download { display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; background:var(--accent); color:white; border-radius:10px; padding:12px 14px; font-weight:700; }
     .download:hover { background:#244bd7; }
     .empty { grid-column:1/-1; padding:48px 16px; text-align:center; color:var(--muted); border:1px dashed #cbd2df; border-radius:16px; background:#ffffff80; }
     footer { border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; padding:22px 0 32px; }
@@ -53,118 +53,117 @@
   </main>
   <footer><div class="wrap">Files are hosted externally. Only share files you have permission to distribute.</div></footer>
 
-<script>
-  const DEFAULT_IMAGE = "assets/default-file.svg";
-  let allItems = [];
-  let activeTag = "all";
+  <script>
+    const REPO_ROOT = "https://raw.githubusercontent.com/AftabJ09/SFS/main/";
+    const DEFAULT_IMAGE = "assets/default-file.svg";
+    let allItems = [];
+    let activeTag = "all";
 
-  function safeText(value) {
-    return String(value ?? "");
-  }
-
-  function driveDownloadUrl(url) {
-    try {
-      const parsed = new URL(url);
-      if (!/(^|\.)drive\.google\.com$/i.test(parsed.hostname)) return url;
-      // Accept /file/d/FILE_ID/... and ?id=FILE_ID URL forms.
-      const pathMatch = parsed.pathname.match(/\/file\/d\/([^/]+)/);
-      const id = pathMatch?.[1] || parsed.searchParams.get("id");
-      if (!id || id === "REPLACE_WITH_FILE_ID") return url;
-      return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
-    } catch {
-      return url;
-    }
-  }
-
-  function make(tag, className, text) {
-    const el = document.createElement(tag);
-    if (className) el.className = className;
-    if (text !== undefined) el.textContent = text;
-    return el;
-  }
-
-  function renderTags(items) {
-    const bar = document.getElementById("tagbar");
-    bar.replaceChildren();
-    const tags = [...new Set(items.flatMap(item => Array.isArray(item.tags) ? item.tags : []))]
-      .filter(Boolean).sort((a,b) => String(a).localeCompare(String(b)));
-    const all = ["all", ...tags];
-    for (const tag of all) {
-      const button = make("button", "tag" + (activeTag === tag ? " active" : ""), tag === "all" ? "All files" : `#${tag}`);
-      button.type = "button";
-      button.addEventListener("click", () => { activeTag = tag; renderTags(allItems); renderItems(); });
-      bar.append(button);
-    }
-  }
-
-  function renderItems() {
-    const grid = document.getElementById("grid");
-    const query = document.getElementById("search").value.trim().toLowerCase();
-    const filtered = allItems.filter(item => {
-      const tags = Array.isArray(item.tags) ? item.tags : [];
-      const text = [item.title, item.description, ...tags].join(" ").toLowerCase();
-      return (activeTag === "all" || tags.includes(activeTag)) && text.includes(query);
-    });
-    grid.replaceChildren();
-    if (!filtered.length) {
-      grid.append(make("div", "empty", "No files match your search."));
-      return;
+    function safeText(value) {
+      return String(value ?? "");
     }
 
-    for (const item of filtered) {
-      const card = make("article", "card");
-      const cover = make("div", "cover");
-      const img = document.createElement("img");
-      img.alt = safeText(item.title) + " preview";
-      img.loading = "lazy";
-      img.src = safeText(item.image).trim() || DEFAULT_IMAGE;
-      img.onerror = () => { img.onerror = null; img.src = DEFAULT_IMAGE; img.classList.add("fallback"); };
-      cover.append(img);
+    function resolveRepoUrl(value, fallback = "") {
+      const text = safeText(value).trim();
+      if (!text) return fallback;
+      if (/^https?:\/\//i.test(text)) return text;
+      return `${REPO_ROOT}${text.replace(/^\/+/, "")}`;
+    }
 
-      const body = make("div", "body");
-      body.append(make("h2", "", item.title || "Untitled file"));
-      body.append(make("p", "desc", item.description || ""));
-      const tagsEl = make("div", "tags");
-      for (const tag of (Array.isArray(item.tags) ? item.tags : [])) {
-        tagsEl.append(make("span", "mini-tag", "#" + tag));
+    function make(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined) el.textContent = text;
+      return el;
+    }
+
+    function renderTags(items) {
+      const bar = document.getElementById("tagbar");
+      bar.replaceChildren();
+      const tags = [...new Set(items.flatMap(item => Array.isArray(item.tags) ? item.tags : []))]
+        .filter(Boolean).sort((a,b) => String(a).localeCompare(String(b)));
+      const all = ["all", ...tags];
+      for (const tag of all) {
+        const button = make("button", "tag" + (activeTag === tag ? " active" : ""), tag === "all" ? "All files" : `#${tag}`);
+        button.type = "button";
+        button.addEventListener("click", () => { activeTag = tag; renderTags(allItems); renderItems(); });
+        bar.append(button);
       }
-      body.append(tagsEl);
-
-      const link = document.createElement("a");
-      link.className = "download";
-      link.href = driveDownloadUrl(safeText(item.driveUrl).trim());
-      link.textContent = "↓  Download file";
-      link.setAttribute("aria-label", `Download ${item.title || "file"}`);
-      link.rel = "noopener noreferrer";
-      // The browser may preview or ask for confirmation depending on Drive settings and file type.
-      body.append(link);
-      card.append(cover, body);
-      grid.append(card);
     }
-  }
 
-  async function init() {
-    try {
-      const response = await fetch("data.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("Could not load data.json");
-      const data = await response.json();
-      const site = data.site || {};
-      document.title = `${site.title || "FileShelf"} — Downloads`;
-      document.getElementById("site-title").textContent = site.title || "FileShelf";
-      document.getElementById("site-description").textContent = site.description || "";
-      allItems = Array.isArray(data.items) ? data.items : [];
-      renderTags(allItems);
-      renderItems();
-    } catch (error) {
-      document.getElementById("grid").append(
-        make("div", "empty", "Could not load data.json. Run this site through a local web server or host it on a static hosting service.")
-      );
-      console.error(error);
+    function renderItems() {
+      const grid = document.getElementById("grid");
+      const query = document.getElementById("search").value.trim().toLowerCase();
+      const filtered = allItems.filter(item => {
+        const tags = Array.isArray(item.tags) ? item.tags : [];
+        const text = [item.title, item.description, ...tags].join(" ").toLowerCase();
+        return (activeTag === "all" || tags.includes(activeTag)) && text.includes(query);
+      });
+      grid.replaceChildren();
+      if (!filtered.length) {
+        grid.append(make("div", "empty", "No files match your search."));
+        return;
+      }
+
+      for (const item of filtered) {
+        const card = make("article", "card");
+        const cover = make("div", "cover");
+        const img = document.createElement("img");
+        img.alt = safeText(item.title) + " preview";
+        img.loading = "lazy";
+        img.src = resolveRepoUrl(safeText(item.image).trim(), resolveRepoUrl(DEFAULT_IMAGE));
+        img.onerror = () => {
+          img.onerror = null;
+          img.src = resolveRepoUrl(DEFAULT_IMAGE);
+          img.classList.add("fallback");
+        };
+        cover.append(img);
+
+        const body = make("div", "body");
+        body.append(make("h2", "", item.title || "Untitled file"));
+        body.append(make("p", "desc", item.description || ""));
+        const tagsEl = make("div", "tags");
+        for (const tag of (Array.isArray(item.tags) ? item.tags : [])) {
+          tagsEl.append(make("span", "mini-tag", "#" + tag));
+        }
+        body.append(tagsEl);
+
+        const link = document.createElement("a");
+        link.className = "download";
+        link.href = resolveRepoUrl(safeText(item.downloadUrl || item.driveUrl || item.fileUrl).trim());
+        link.download = safeText(item.fileName || item.title || "blueprint");
+        link.textContent = "↓ Download file";
+        link.setAttribute("aria-label", `Download ${item.title || "file"}`);
+        link.rel = "noopener noreferrer";
+        body.append(link);
+
+        card.append(cover, body);
+        grid.append(card);
+      }
     }
-  }
 
-  document.getElementById("search").addEventListener("input", renderItems);
-  init();
-</script>
+    async function init() {
+      try {
+        const response = await fetch("data.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Could not load data.json");
+        const data = await response.json();
+        const site = data.site || {};
+        document.title = `${site.title || "FileShelf"} — Downloads`;
+        document.getElementById("site-title").textContent = site.title || "FileShelf";
+        document.getElementById("site-description").textContent = site.description || "";
+        allItems = Array.isArray(data.items) ? data.items : [];
+        renderTags(allItems);
+        renderItems();
+      } catch (error) {
+        document.getElementById("grid").append(
+          make("div", "empty", "Could not load data.json. Run this site through a local web server or host it on a static hosting service.")
+        );
+        console.error(error);
+      }
+    }
+
+    document.getElementById("search").addEventListener("input", renderItems);
+    init();
+  </script>
 </body>
 </html>
