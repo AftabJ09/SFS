@@ -26,7 +26,7 @@
     {
       "id": "2",
       "title": "Magnetic Lift Arm",
-      "description": "A compact Spaceflight Simulator surface utility rig featuring a tall strut frame, docking ports, a probe, solar array, fuel tank, and parachutes. Built as a magnetic-style lifting and handling arm for moving or docking with nearby craft.",
+      "description": "A compact Spaceflight Simulator surface utility rig featuring a tall strut frame, docking ports, a probe, solar array, fuel tank, and parachutes. Built as a magnetic-style lifting platform with practical utility and compact footprint.",
       "tags": [
         "SFS",
         "Spaceflight Simulator",
@@ -34,7 +34,7 @@
         "magnetic lift",
         "utility"
       ],
-      "image": "assets/1_sfs.jpg",
+      "image": "assets/2_sfs.jpg",
       "downloadUrl": "blueprints/magnetic_lift_arm.txt",
       "fileName": "SFS-Magnetic-Lift-Arm.txt"
     }
