@@ -1,0 +1,222 @@
+{
+  "center": 10.0,
+  "parts": [
+    {
+      "n": "Strut",
+      "p": {"x": 2.5, "y": -1.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 6.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 2.0, "y": -1.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 1.0, "y": -1.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 1.0, "y": -1.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 6.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 3.0, "y": -7.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 3.0, "y": -7.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 0.5}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 0.5, "y": -7.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 0.5, "y": -7.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 0.5}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 3.0, "y": -8.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 0.5}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 3.0, "y": -8.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 0.5, "y": -8.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"size": 0.5}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 0.5, "y": -8.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 1.5, "y": -9.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 180.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 2.5, "y": -9.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 180.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 3.5, "y": -9.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 180.0},
+      "t": "-Infinity",
+      "N": {"size": 1.0}
+    },
+    {
+      "n": "Docking Port",
+      "p": {"x": 2.0, "y": -2.0},
+      "o": {"x": 0.3, "y": -3.05, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"width": 3.0, "force_multiplier": 500.0, "sep_force_multiplier": 10.0}
+    },
+    {
+      "n": "Solar Array 2",
+      "p": {"x": 2.0, "y": -9.5},
+      "o": {"x": 1.0, "y": 0.3, "z": 90.0},
+      "t": "-Infinity",
+      "N": {"state": 0.0, "state_target": 0.0}
+    },
+    {
+      "n": "Probe",
+      "p": {"x": 2.0, "y": -11.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"width": 2.0}
+    },
+    {
+      "n": "Fuel Tank",
+      "p": {"x": 2.0, "y": -8.5},
+      "o": {"x": 0.4788, "y": 0.6, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"width_original": 2.0, "width_a": 2.0, "width_b": 2.0, "height": 1.0, "fuel_percent": 1.0},
+      "T": {"color_tex": "_", "shape_tex": "_"}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 1.5, "y": -8.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Docking Port",
+      "p": {"x": 2.0, "y": -7.5},
+      "o": {"x": 0.3, "y": 1.7, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"width": 3.0, "force_multiplier": 500.0, "sep_force_multiplier": 10.0}
+    },
+    {
+      "n": "Fuel Tank",
+      "p": {"x": 2.0, "y": -1.5},
+      "o": {"x": 0.45, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"width_original": 2.0, "width_a": 2.0, "width_b": 2.0, "height": 1.0, "fuel_percent": 1.0},
+      "T": {"color_tex": "_", "shape_tex": "_"}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 1.0, "y": -8.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 3.0, "y": -8.0},
+      "o": {"x": -1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 3.0, "y": -9.0},
+      "o": {"x": -1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 1.0, "y": -9.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 0.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Strut",
+      "p": {"x": 5.0, "y": -11.0},
+      "o": {"x": 1.0, "y": 1.0, "z": 180.0},
+      "t": "-Infinity",
+      "N": {"size": 6.0}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": -1.0, "y": -11.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    },
+    {
+      "n": "Parachute Side",
+      "p": {"x": 4.0, "y": -11.5},
+      "o": {"x": 1.0, "y": 1.0, "z": 270.0},
+      "t": "-Infinity",
+      "N": {"deploy_state": 0.0, "animation_state": 0.0}
+    }
+  ],
+  "stages": [
+    {"stageId": 1, "partIndexes": [20]},
+    {"stageId": 2, "partIndexes": [20]},
+    {"stageId": 3, "partIndexes": [20]},
+    {"stageId": 4, "partIndexes": [20]},
+    {"stageId": 5, "partIndexes": [20]},
+    {"stageId": 6, "partIndexes": [20]},
+    {"stageId": 7, "partIndexes": [20]}
+  ],
+  "rotation": 0.0,
+  "offset": {"x": 0.0, "y": 0.0},
+  "interiorView": true
+}
